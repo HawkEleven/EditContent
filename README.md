@@ -1,8 +1,6 @@
 # UITableView形式的图文编辑
-UITableView形式的图文编辑
-#### 导语
 
-> 本方案使用**UITableview**实现简单的图文混编效果，数据存储采用**Json**字符串。
+UITableView形式的图文编辑:本方案使用**UITableview**实现简单的图文混编效果，数据存储采用**Json**字符串。
  
 ## 一、背景
 
