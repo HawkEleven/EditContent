@@ -1,8 +1,10 @@
 # UITableView形式的图文编辑
 ####导语
+
 > 本方案使用**UITableview**实现简单的图文混编效果，数据存储采用**Json**字符串。
  
 ## 一、背景
+
 近期做项目，需要图文编辑功能，就上网搜索了一些资料，发现主流的方式有三种：
 **UIView+UITextView+ImageView**、**UIWebview**、**CoreText**，数据存储方面主要采用**Html**和**Json**。
 
@@ -11,7 +13,9 @@
 ![图文编辑.gif](http://upload-images.jianshu.io/upload_images/1338824-80651d8eb7329822.gif?imageMogr2/auto-orient/strip)
 
 ## 二、具体实现
+
 ###插入图片
+
 这里存在两种情况：
 
 1）在末尾依次插入图片和对应的输入框；
@@ -41,6 +45,7 @@
 	}
 ```
 ###文本输入
+
 输入文本时动态改变textview的高度，达到自适应效果（这里使用的是RAC，也可以用代理实现）：
 
 ```objc
@@ -66,6 +71,7 @@
     }];
 ```
 ###图片删除
+
 删除图片时，将相邻的两个文本cell合并为一个，并处理相应的数据源：
 
 ```objc
