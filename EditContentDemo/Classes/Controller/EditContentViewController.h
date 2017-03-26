@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  EditContentViewController.h
 //  EditContentDemo
 //
 //  Created by Eleven on 2017/3/25.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface EditContentViewController : UIViewController
 
 
 @end
