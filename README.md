@@ -93,4 +93,36 @@
         };
 ```
 
+###数据存储
+
+数据上传时，将一个图片和一个文本的数据作为一个整体进行处理：
+
+```
+    NSMutableArray *arrM = [NSMutableArray array];
+    if (self.dataArr.count % 2 == 0) {
+        for (NSInteger i = 0; i < self.dataArr.count / 2; i ++) {
+            EditContentItemModel *model = [[EditContentItemModel alloc] init];
+            model.imageUrl = self.dataArr[2 * i].imageUrl;
+            model.inputStr = self.dataArr[2 * i + 1].inputStr;
+            [arrM addObject:model];
+        }
+    } else {
+        for (NSInteger i = 0; i < (self.dataArr.count + 1) / 2; i ++) {
+            if (i == 0) {
+                EditContentItemModel *model = [[EditContentItemModel alloc] init];
+                model.imageUrl = @"";
+                model.inputStr = self.dataArr[0].inputStr;
+                [arrM addObject:model];
+            } else {
+                EditContentItemModel *model = [[EditContentItemModel alloc] init];
+                model.imageUrl = self.dataArr[2 * i - 1].imageUrl;
+                model.inputStr = self.dataArr[2 * i].inputStr;
+                [arrM addObject:model];
+            }
+        }
+    }
+    NSDictionary *dict = @{@"mEditorDatas" : arrM};
+    NSString *mEditorDatas = [dict yy_modelToJSONString];
+```
+
 至此，基本功能已经完成，若大家有排序这种需求可以在此基础上进行拓展添加。
