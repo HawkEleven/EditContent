@@ -97,7 +97,7 @@
 
 数据上传时，将一个图片和一个文本的数据作为一个整体进行处理：
 
-```
+```objc
     NSMutableArray *arrM = [NSMutableArray array];
     if (self.dataArr.count % 2 == 0) {
         for (NSInteger i = 0; i < self.dataArr.count / 2; i ++) {
