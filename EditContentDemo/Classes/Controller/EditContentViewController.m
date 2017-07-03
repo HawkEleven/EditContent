@@ -69,6 +69,41 @@ static CGFloat const kFooterHeight = 45;
     });
 }
 
+- (void)_uploadImages:(NSArray *)photos {
+    dispatch_group_t group = dispatch_group_create();
+    for (NSInteger i = 0; i < photos.count; i ++) {
+        EditContentModel *imgModel = [[EditContentModel alloc] init];
+        imgModel.img = photos[i];
+        imgModel.cellType = EditContentCellTypeImage;
+        if (self.isInsertImg == YES) {
+            [self.dataArr insertObject:imgModel atIndex:self.responderIndex + (2 * i + 1)];
+        } else {
+            [self.dataArr addObject:imgModel];
+        }
+        dispatch_group_enter(group);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            EditContentModel *model = self.dataArr[[self.dataArr indexOfObject:imgModel]];
+            // 模拟上传返回的图片路径
+            model.imageUrl = _testUrls[arc4random() % 3];
+            dispatch_group_leave(group);
+        });
+        
+        EditContentModel *textModel = [[EditContentModel alloc] init];
+        textModel.inputStr = @"";
+        textModel.cellType = EditContentCellTypeText;
+        if (self.isInsertImg == YES) {
+            [self.dataArr insertObject:textModel atIndex:self.responderIndex + (2 * i + 2)];
+        } else {
+            [self.dataArr addObject:textModel];
+        }
+    }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [ResultPromptView showPromptWithMessage:@"上传成功"];
+        [self.tableView reloadData];
+        self.insertImg = NO;
+    });
+}
+
 #pragma mark - <UITableViewDelegate, UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -132,29 +167,7 @@ static CGFloat const kFooterHeight = 45;
     @weakify(self);
     [imagePickerVC setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         @strongify(self);
-        for (NSInteger i = 0; i < photos.count; i ++) {
-            EditContentModel *imgModel = [[EditContentModel alloc] init];
-            imgModel.img = photos[i];
-            imgModel.cellType = EditContentCellTypeImage;
-            if (self.isInsertImg == YES) {
-                [self.dataArr insertObject:imgModel atIndex:self.responderIndex + (2 * i + 1)];
-            } else {
-                [self.dataArr addObject:imgModel];
-            }
-            [self _uploadWithImage:photos[i] index:[self.dataArr indexOfObject:imgModel]];
-            
-            
-            EditContentModel *textModel = [[EditContentModel alloc] init];
-            textModel.inputStr = @"";
-            textModel.cellType = EditContentCellTypeText;
-            if (self.isInsertImg == YES) {
-                [self.dataArr insertObject:textModel atIndex:self.responderIndex + (2 * i + 2)];
-            } else {
-                [self.dataArr addObject:textModel];
-            }
-        }
-        [self.tableView reloadData];
-        self.insertImg = NO;
+        [self _uploadImages:photos];
     }];
     [self presentViewController:imagePickerVC animated:YES completion:nil];
 }
@@ -205,6 +218,7 @@ static CGFloat const kFooterHeight = 45;
     NSString *mEditorDatas = [dict yy_modelToJSONString];
     NSLog(@"%@", mEditorDatas);
     
+    // 模拟网络请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [ResultPromptView showPromptWithMessage:@"发布成功"];
     });
