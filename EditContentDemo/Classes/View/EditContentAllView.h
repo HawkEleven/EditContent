@@ -26,7 +26,7 @@
 @end
 
 
-@interface EditContentTextViewCell : UITableViewCell
+@interface EditContentTextViewCell : UITableViewCell <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 @property (nonatomic, strong) EditContentModel *model;

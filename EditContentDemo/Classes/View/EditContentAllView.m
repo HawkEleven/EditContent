@@ -16,9 +16,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     view.backgroundColor = HexColorInt32_t(F0F0F0);
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 1)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
     line.backgroundColor = HexColorInt32_t(D1D6DA);
     [view addSubview:line];
     
@@ -84,9 +84,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
+    _inputTextView.delegate = self;
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     view.backgroundColor = HexColorInt32_t(F0F0F0);
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 1)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
     line.backgroundColor = HexColorInt32_t(D1D6DA);
     [view addSubview:line];
     
@@ -106,27 +109,6 @@
     [rightBtn addTarget:self action:@selector(_dismissKeyBoard) forControlEvents:UIControlEventTouchUpInside];
     
     _inputTextView.inputAccessoryView = view;
-
-    @weakify(self);
-    [_inputTextView.rac_textSignal subscribeNext:^(id x) {
-        @strongify(self);
-        self.model.inputStr = x;
-        self->_placeholderLabel.hidden = [x length] > 0;
-        
-        // textView高度自适应
-        CGRect bounds = _inputTextView.bounds;
-        
-        // 计算 text view 的高度
-        CGSize maxSize = CGSizeMake(bounds.size.width, CGFLOAT_MAX);
-        CGSize newSize = [_inputTextView sizeThatFits:maxSize];
-        bounds.size = newSize;
-        _inputTextView.bounds = bounds;
-        
-        // 让 table view 重新计算高度
-        UITableView *tableView = [self tableView];
-        [tableView beginUpdates];
-        [tableView endUpdates];
-    }];
 }
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
@@ -137,6 +119,27 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+#pragma mark - UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)textView {
+    NSString *x = textView.text;
+    self.model.inputStr = x;
+    self->_placeholderLabel.hidden = [x length] > 0;
+    
+    // textView高度自适应
+    CGRect bounds = _inputTextView.bounds;
+    
+    // 计算 text view 的高度
+    CGSize maxSize = CGSizeMake(bounds.size.width, CGFLOAT_MAX);
+    CGSize newSize = [_inputTextView sizeThatFits:maxSize];
+    bounds.size = newSize;
+    _inputTextView.bounds = bounds;
+    
+    // 让 table view 重新计算高度
+    UITableView *tableView = [self tableView];
+    [tableView beginUpdates];
+    [tableView endUpdates];
 }
 
 #pragma mark - private methods

@@ -21,6 +21,10 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    if (@available(iOS 11.0, *)){
+        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+    }
+    
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[EditContentViewController alloc] init]];
     self.window.rootViewController = nav;
     

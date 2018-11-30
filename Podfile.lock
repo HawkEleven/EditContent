@@ -1,0 +1,34 @@
+PODS:
+  - IQKeyboardManager (6.2.0)
+  - SDAutoLayout (2.2.1)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
+  - TZImagePickerController (3.1.5)
+  - YYModel (1.0.4)
+
+DEPENDENCIES:
+  - IQKeyboardManager
+  - SDAutoLayout
+  - SDWebImage
+  - TZImagePickerController
+  - YYModel
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - IQKeyboardManager
+    - SDAutoLayout
+    - SDWebImage
+    - TZImagePickerController
+    - YYModel
+
+SPEC CHECKSUMS:
+  IQKeyboardManager: 6194101620b73af5e67900b8f89707a99de0b804
+  SDAutoLayout: 8bf6b3bbc8b01f775d4defbb4fda2ace805461be
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  TZImagePickerController: 6cc6e9c1a73bb8e62cfef98fd40af2d90634dcf5
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+
+PODFILE CHECKSUM: 782f2cc3ff0810eeee1b3f69cc8163fa96b3483e
+
+COCOAPODS: 1.6.0.beta.1

@@ -37,7 +37,7 @@ static CGFloat const kFooterHeight = 45;
 }
 
 - (void)viewDidLayoutSubviews {
-    self.tableHeader.frame = CGRectMake(0, 0, kScreenWidth, 67);
+    self.tableHeader.frame = CGRectMake(0, 0, SCREEN_WIDTH, 67);
 }
 
 #pragma mark - private methods
@@ -145,14 +145,10 @@ static CGFloat const kFooterHeight = 45;
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EditContentModel *model = self.dataArr[indexPath.row];
-    if (model.cellType == EditContentCellTypeImage) {
-        return 212;
-    } else {
-        return UITableViewAutomaticDimension;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    EditContentModel *model = self.dataArr[indexPath.row];
+//    return model.cellHeight;
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -227,10 +223,11 @@ static CGFloat const kFooterHeight = 45;
 #pragma mark - getter
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - kFooterHeight)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_AND_NAVIGATION_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_AND_NAVIGATION_HEIGHT - kFooterHeight)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.estimatedRowHeight = 180;
+        _tableView.estimatedRowHeight = 60;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.backgroundColor = HexColorInt32_t(F0F0F0);
@@ -249,7 +246,7 @@ static CGFloat const kFooterHeight = 45;
 
 - (UIButton *)footerView {
     if (!_footerView) {
-        _footerView = [[UIButton alloc] initWithFrame:CGRectMake(0, kScreenHeight - kFooterHeight, kScreenWidth, kFooterHeight)];
+        _footerView = [[UIButton alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - kFooterHeight, SCREEN_WIDTH, kFooterHeight)];
         [_footerView setTitle:@"添加图片" forState:UIControlStateNormal];
         _footerView.backgroundColor = [UIColor lightGrayColor];
         [_footerView addTarget:self action:@selector(_addImg) forControlEvents:UIControlEventTouchUpInside];
