@@ -129,7 +129,6 @@
 至此，基本功能已经完成，若大家有排序这种需求可以在此基础上进行拓展添加。
 
 ## 感谢
-* [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa)
 * [TZImagePickerController](https://github.com/banchichen/TZImagePickerController)
 * [SDAutoLayout](https://github.com/gsdios/SDAutoLayout)
 * [SDWebImage](https://github.com/rs/SDWebImage)
